@@ -1,0 +1,6 @@
+.valgrind.txt
+output.txt
+*.out
+
+prototype
+build
