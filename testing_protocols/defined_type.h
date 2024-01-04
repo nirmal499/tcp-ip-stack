@@ -92,6 +92,7 @@ struct Defined{
         char temp_char_name[size_of_string + 1]; /* +1 for null character */
         std::memcpy(temp_char_name, byte_buffer + current_offset, size_of_string);
         current_offset += size_of_string;
+        temp_char_name1[size_of_string] = '\0';
         std::string temp_string_name(temp_char_name);
         name = temp_string_name;
 
