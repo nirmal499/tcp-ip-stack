@@ -3,11 +3,13 @@ add_library(${LIBRARY_NAME} STATIC
 	util/topologies.cpp
 
 	net/net.cpp
+	comm/comm.cpp
 )
 
 target_include_directories(${LIBRARY_NAME}
 	PUBLIC "util/include"
 	PUBLIC "net/include"
+	PUBLIC "comm/include"
 )
 
 #[[
