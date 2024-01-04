@@ -57,7 +57,7 @@ namespace tcpip{
 			for(const auto& node_element: topograph->node_list){
 
 				/* check if the node_element->udp_sock_fd is present in active_sock_fd_set*/
-				if(FD_ISSET(node_element->udp_sock_fd, &backup_sock_fd_set)){
+				if(FD_ISSET(node_element->udp_sock_fd, &active_sock_fd_set)){
 					/* This node_element->udp_sock_fd is ready for READING */
 
 					memset(recv_buffer, 0, MAX_PACKET_BUFFER_SIZE);
@@ -73,11 +73,12 @@ namespace tcpip{
 						&sender_addr_size
 					);
 
+					/* The return value of recvfrom is the number of bytes received, or -1 if an error occurred. 
+					If the return value is 0, it usually means that the remote side has closed the connection. */
+
 					process_received_pkt(node_element.get(), recv_buffer, bytes_recvd);
 				}
 			}
-
-
 		}
 	}
 
@@ -89,6 +90,7 @@ namespace tcpip{
 		std::thread thread1(__network_start_pkt_receiver_thread, topograph);
 
 		thread1.detach();
+		// thread1.join();
 	}
 
 	bool node_set_loopback_address(node_t* node, const std::array<unsigned char, 4>& ip_addr){
@@ -289,6 +291,26 @@ namespace tcpip{
 				std::cout << "\tIP Addr = " << interface_element_shared_ptr->intf_nw_props << "\n";
 			}
 		} 
+	}
+
+	node_t* graph_t::get_node_by_node_name(const std::string& node_name){
+		for(const auto& node_element: node_list){
+			if(node_element->node_name == node_name){
+				return node_element.get();
+			}
+		}
+
+		return nullptr;
+	}
+
+	interface_t* node_t::get_node_if_by_name(const std::string& if_name){
+		for(const auto& if_element: intf){
+			if(if_element->if_name == if_name){
+				return if_element.get();
+			}
+		}
+
+		return nullptr;
 	}
 
 

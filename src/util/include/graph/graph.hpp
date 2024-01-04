@@ -58,6 +58,8 @@ namespace tcpip{
 		int udp_sock_fd{};
 
 		node_t(std::string nodename);
+		interface_t* get_node_if_by_name(const std::string& if_name);
+
 
 		/* node network properties */
 		node_nw_prop_t node_nw_prop;
@@ -77,6 +79,8 @@ namespace tcpip{
 		void add_node(std::shared_ptr<node_t> node);
 
 		void dump_graph();
+
+		node_t* get_node_by_node_name(const std::string& node_name);
 
 	};
 

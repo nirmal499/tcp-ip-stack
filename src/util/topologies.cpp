@@ -30,7 +30,7 @@ std::unique_ptr<tcpip::graph_t> build_first_topo() {
     /*  In this api we are going to iterate over udp socket fds of each
         node of the topology and we will listen on them
     */
-    // network_start_pkt_receiver_thread(topo.get());
+    network_start_pkt_receiver_thread(topo.get());
 
     return topo;
 }
